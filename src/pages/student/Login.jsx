@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const StudentLogin = () => {
@@ -37,6 +37,44 @@ const StudentLogin = () => {
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
+  );
+};
+
+export default StudentLogin;
+*/
+import AuthForm from '../components/authForm';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const StudentLogin = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const res = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+      navigate('/student/dashboard');
+    }
+  };
+
+  return (
+    <AuthForm
+      title="Student Login"
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      handleSubmit={handleLogin}
+      buttonText="Login"
+    />
   );
 };
 
