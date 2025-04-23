@@ -15,6 +15,7 @@ import AdminStatus from './pages/admin/Status';
 import AdminNavbar from './components/AdminNavbar';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import ProtectedRoute from './components/ProtectedRoute';
+import Home from './pages/Home';  
 const App = () => {
   return (
     <>
@@ -42,6 +43,26 @@ const App = () => {
         <Route path="/admin/status" element={<ProtectedAdminRoute><AdminStatus /></ProtectedAdminRoute>} />
         <Route path="*" element={<Navigate to="/admin/dashboard" />} />
       </Routes>
+      <Routes>
+      <Route path="/" element={<Home />} />
+      {/* Student Auth + Pages */}
+      <Route path="/student/login" element={<StudentLogin />} />
+      <Route path="/student/signup" element={<StudentSignup />} />
+      <Route path="/student/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      <Route path="/student/jobs" element={<ProtectedRoute><Jobs /></ProtectedRoute>} />
+      <Route path="/student/applications" element={<ProtectedRoute><Applications /></ProtectedRoute>} />
+      <Route path="/student/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      {/* Admin Auth + Pages */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/*" element={<AdminNavbar />}>
+      <Route path="dashboard" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
+      <Route path="jobs" element={<ProtectedAdminRoute><AdminJobs /></ProtectedAdminRoute>} />
+      <Route path="jobs/new" element={<ProtectedAdminRoute><AdminCreateJob /></ProtectedAdminRoute>} />
+      <Route path="applications" element={<ProtectedAdminRoute><AdminApplications /></ProtectedAdminRoute>} />
+      <Route path="status" element={<ProtectedAdminRoute><AdminStatus /></ProtectedAdminRoute>} />
+    </Route>
+    <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
     </>
   )
 }
